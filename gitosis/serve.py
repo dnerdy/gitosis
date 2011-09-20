@@ -199,6 +199,10 @@ class Main(app.App):
             main_log.error('%s', e)
             sys.exit(1)
 
+        # We export GITOSIS_USER to that hooks can distinguish users
+        # (since everyone is using the same user account on the system)
+        os.environ['GITOSIS_USER'] = user
+
         main_log.debug('Serving %s', newcmd)
         os.execvp('git', ['git', 'shell', '-c', newcmd])
         main_log.error('Cannot execute git-shell.')
